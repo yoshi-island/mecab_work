@@ -124,7 +124,7 @@ def get_hinshi(text=None, hinshi=None, nglist=[]):
 if __name__ == "__main__":
   ## チャット会話を取得
   channel_id = get_slack_channel_id(token, channel_name)
-  chat_list = get_slack_chat(token, channel_id, 100)
+  chat_list = get_slack_chat(token, channel_id, 300)
 
   ## 動詞をリストで取得
   verb_list = []
@@ -147,22 +147,35 @@ if __name__ == "__main__":
     place_list = place_list + place_line
   #print(place_list)
 
+  ## 人名をリストで取得
+  people_list = []
+  for cl in chat_list:
+    people_line = get_hinshi(cl, "名詞-固有名詞-人名-名")
+    people_list = people_list + people_line
+  #print(people_list)
+
   ## 文字列成形
   if len(verb_list) > 0:
     doushita = random.choice(verb_list) + "。"
   else:
     doushita = ""
+
   if len(place_list) > 0:
     dokode  = random.choice(place_list) + "で"
   else:
     dokode = ""
-  if len(noun_list) > 0:
+
+  if len(people_list) > 0:
+    naniga = random.choice(people_list) + "が"
+  elif len(noun_list) > 0:
     naniga = random.choice(noun_list) + "が"
   else:
     naniga = ""
+
   if len(noun_list) > 0:
     naniwo = random.choice(noun_list) + "を"
   else:
     naniwo = ""
+
   itsudoko_line = dokode + naniga + naniwo + doushita
   print("%s、、、「#%s」はそんなチャンネルです。" % (itsudoko_line, channel_name))
