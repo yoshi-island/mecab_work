@@ -165,6 +165,7 @@ if __name__ == "__main__":
   else:
     dokode = ""
 
+  ### 人名がヒットしなければ名詞を入れる。
   if len(people_list) > 0:
     naniga = random.choice(people_list) + "が"
   elif len(noun_list) > 0:
